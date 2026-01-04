@@ -14,7 +14,7 @@ public class ReadCSVFile {
         this.map = load_array(file_name);
     }
 
-    private int[][] load_array(String file_name) {
+    public int[][] load_array(String file_name) {
         List<List<Integer>> columns = new ArrayList<>();
         int expected_column_count = 0;
         int row_index = 0;

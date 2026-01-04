@@ -56,6 +56,23 @@ public class tile{
         }
     }
 
+    public static void tile_next_level(ReadCSVFile map, tile[][] tiles){
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < map.width * map.height; i++) {
+            if (x == map.width) {
+                y++;
+                x = 0;
+            }
+            tiles[x][y].x = x * TILE_UNIT;
+            tiles[x][y].y = y * TILE_UNIT;
+            assign_tile_type(map.map[x][y], tiles[x][y]);
+        x++;
+        }
+
+
+    }
+
     public static void assign_tile_type(int type, tile tiles){
         switch (type) {
             case 1:
@@ -95,6 +112,9 @@ public class tile{
                 exit_y = tiles.y/TILE_UNIT;
                 tiles.tile_image.setImage(exit_closed);
                 tiles.traversable = false;
+                System.out.println(exit_x);
+                System.out.println(exit_y);
+
                 break;
             case 10:
                 tiles.tile_image.setImage(exit_open);
