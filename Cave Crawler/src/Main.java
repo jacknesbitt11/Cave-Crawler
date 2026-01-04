@@ -25,7 +25,7 @@ public class Main extends Application{
         Group next_level = new Group();
         Scene scene = new Scene(level, 1920, 1080, Color.BLACK);
         stage.setTitle("Cave Crawler");
-        Image icon = new Image("rock.png"); //Sets icon
+        Image icon =tile.rock1; //Sets icon
         tile.root = level;
         stage.getIcons().add(icon);
         stage.setFullScreen(true);

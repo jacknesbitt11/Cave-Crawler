@@ -19,8 +19,9 @@ public class tile{
     ImageView tile_image = new ImageView(new Image("lantern-up.png"));
     boolean traversable;
     int tile_type;
-    static  Image rock = new Image("rock.png");
-    static  Image flatground = new Image("flatground.png");
+    static  Image rock1 = new Image("rock1.png");
+    static  Image rock2 = new Image("rock2.png");
+    static  Image flatground1 = new Image("flatground1.png");
     static  Image border = new Image("border.png");
     static  Image edge_bottom = new Image("edge-bottom.png");
     static  Image black = new Image("black.png");
@@ -29,7 +30,9 @@ public class tile{
     static  Image shovel = new Image("shovel.png");
     static  Image exit_open = new Image("exit-open.png");
     static  Image exit_closed = new Image("exit-closed.png");
-
+    static  Image edge_right = new Image("edge-right.png");
+    static  Image flatground2 = new Image("flatground2.png");
+    static  Image flatground3 = new Image("flatground3.png");
 
 
 
@@ -74,13 +77,28 @@ public class tile{
     }
 
     public static void assign_tile_type(int type, tile tiles){
+        double random;
         switch (type) {
             case 1:
-                tiles.tile_image.setImage(rock);
+               random = Math.random();
+                if(random > 0.75){
+                    tiles.tile_image.setImage(rock2);
+                } else{
+                    tiles.tile_image.setImage(rock1);
+
+                }
                 tiles.traversable = false;
                 break;
             case 2:
-                tiles.tile_image.setImage(flatground);
+                random = Math.random();
+                if(random > 0.8){
+                    tiles.tile_image.setImage(flatground2);
+                } else if( random < 0.1){
+                    tiles.tile_image.setImage(flatground3);
+
+                } else {
+                    tiles.tile_image.setImage(flatground1);
+                }
                 tiles.traversable = true;
                 break;
             case 3:
@@ -92,11 +110,11 @@ public class tile{
                 tiles.traversable = false;
                 break;
             case 5:
-                tiles.tile_image.setImage(black);
+                tiles.tile_image.setImage(edge_right);
                 tiles.traversable = true;
                 break;
             case 6:
-                tiles.tile_image.setImage(lantern_up);
+                tiles.tile_image.setImage(black);
                 tiles.traversable = true;
                 break;
             case 7:

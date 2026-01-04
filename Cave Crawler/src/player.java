@@ -9,7 +9,7 @@ public class player extends tile {
     Image left = new Image("lantern-left.png");
     Image right = new Image("lantern-right.png");
     Image test = new Image("player.png");
-    Image default_tile = new Image("flatground.png");
+    Image default_tile = new Image("flatground2.png");
     tile next_level = new tile(-1920, -1080);
     Image next_level_image = new Image("level_win.png");
     boolean lantern = true;
@@ -26,6 +26,7 @@ public class player extends tile {
         super(0, 0);
         next_level.generate_tile();
         next_level.tile_image.setImage(next_level_image);
+
 
     }
 
