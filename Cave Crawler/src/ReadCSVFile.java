@@ -13,6 +13,8 @@ public class ReadCSVFile {
     public ReadCSVFile(String file_name){
         this.map = load_array(file_name);
     }
+    //Used to read in the map csv files, the csv is read in column by column so that x and y can be used uniformly
+
 
     public int[][] load_array(String file_name) {
         List<List<Integer>> columns = new ArrayList<>();

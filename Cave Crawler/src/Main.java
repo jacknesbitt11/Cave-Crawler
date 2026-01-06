@@ -4,29 +4,26 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
-
-import java.util.Arrays;
 
 
 public class Main extends Application{
     static int TILE_UNIT = 128;
-    static int NUMBER_OF_LEVELS = 2;
+    static int NUMBER_OF_LEVELS = 5;
 
     public static void main(String[] args){
         launch(args);
     }
     @Override
     public void start(Stage stage) throws Exception {
-        //create groups, setup frame, in future I can create multiple scenes for the main menu etc.
+        //create groups, setup frame
         Group level = new Group();
         Group next_level = new Group();
         Scene scene = new Scene(level, 1920, 1080, Color.BLACK);
         stage.setTitle("Cave Crawler");
-        Image icon =tile.rock1; //Sets icon
-        tile.root = level;
+        Image icon = Tile.rock1; //Sets icon
+        Tile.root = level;
         stage.getIcons().add(icon);
         stage.setFullScreen(true);
         stage.setResizable(false);
@@ -35,16 +32,17 @@ public class Main extends Application{
         game(scene);
     }
     public void game(Scene scene) {
-        ReadCSVFile mapLoader = new ReadCSVFile("C:/Users/jack/Dropbox/Java Project/Cave Crawler/src/map.csv");
-        String file_name = "test_image128.png";
-        tile[][] tiles = new tile[mapLoader.width][mapLoader.height];
-        player player = new player("lantern-up.png");
-        tile.map_all_tiles(mapLoader, tiles);
+        //Main game loop
+        ReadCSVFile mapLoader = new ReadCSVFile("src/map.csv");
+        Tile[][] tiles = new Tile[mapLoader.width][mapLoader.height];
+        player player = new player("character-up.png");
+        Tile.mapAllTiles(mapLoader, tiles);
 
-        player.generate_tile();
+        player.generateTile();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                //Used to get all the keyboard inputs from the user, W through D are movement controls, so they check collision and update the direction the player is facing
                 switch (event.getCode()) {
                     case W:
                         if (player.collision(0, -1, tiles) || player.y == 1) {
@@ -75,25 +73,28 @@ public class Main extends Application{
                         }
                         player.player_move(-TILE_UNIT, 0, tiles);
                         break;
-
+                    //N and R are used to advance to the next level or restart the current level
                     case N:
                         if(player.win) {
                             if(player.current_level < NUMBER_OF_LEVELS){player.current_level++;}
 
-                            mapLoader.map = mapLoader.load_array("C:/Users/jack/Dropbox/Java Project/Cave Crawler/src/map" + player.current_level + ".csv");
-                            tile.tile_next_level(mapLoader, tiles);
+                            mapLoader.map = mapLoader.load_array("src/map" + player.current_level + ".csv");
+                            Tile.tile_next_level(mapLoader, tiles);
                             player.reset(tiles);
 
                             break;
                         }
                     case R:
-                        if(player.win) {
-                            tile.tile_next_level(mapLoader, tiles);
+                        if(player.win || player.lose) {
+                            Tile.tile_next_level(mapLoader, tiles);
                             player.reset(tiles);
 
-                            break;
                         }
-
+                        break;
+                    // F is used to break a boulder when the player is holding a pickaxe
+                    case F:
+                        player.break_boulder_or_fill_hole(tiles);
+                        break;
                 }
             }
             });
