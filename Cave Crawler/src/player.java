@@ -2,7 +2,6 @@ import javafx.scene.image.*;
 
 
 public class player extends Tile {
-    static int TILE_UNIT = 128;
     Image up = new Image("character-up.png");
     Image down = new Image("character-down.png");
     Image left = new Image("character-left.png");
@@ -25,7 +24,7 @@ public class player extends Tile {
     int direction = 1;
 
 
-    public player(String tile_type) {super(0, 0);
+    public player() {super(0, 0);
         lose_level.generateTile();
         lose_level.tile_image.setImage(lose_level_image);
         pickaxe_icon_tile.generateTile();
@@ -37,7 +36,7 @@ public class player extends Tile {
 
     }
 
-    public void update_image(int state){
+    public void updateImage(int state){
         //Called when the player moves, updates the character image to face the correct direction
             switch (state) {
                 case 1:
@@ -58,7 +57,7 @@ public class player extends Tile {
                     break;
             }
     }
-    public void player_move(int x, int y, Tile[][] tiles){
+    public void playerMove(int x, int y, Tile[][] tiles){
         //Moves all the tiles in the given direction
         for (Tile[] tile_row : tiles) {
             for (Tile individual_tile : tile_row) {
@@ -67,29 +66,29 @@ public class player extends Tile {
         }
         if(x == 0 && y == TILE_UNIT){
             this.y--;
-            this.update_image(1);
+            this.updateImage(1);
         } else if(x == TILE_UNIT && y == 0){
             this.x--;
-            this.update_image(4);
+            this.updateImage(4);
         } else if (x == 0 && y == -TILE_UNIT){
             this.y++;
-            this.update_image(3);
+            this.updateImage(3);
         } else if (x == -TILE_UNIT && y == 0){
             this.x++;
-            this.update_image(2);
+            this.updateImage(2);
         }
-        sounds.walking_sound();
+        sounds.walkingSound();
 
 
         //Various checks preformed on every tile move
-        item_found(tiles);
-        damage_taken(tiles);
+        itemFound(tiles);
+        damageTaken(tiles);
 
         if(pickaxe && shovel){
-            tiles[Tile.exit_x][Tile.exit_y].assign_tile_type(7);
+            tiles[Tile.exit_x][Tile.exit_y].assignTileType(7);
         }
-        if(pickaxe && shovel && tiles[this.x][this.y].tile_type == 7){
-            game_win();
+        if(pickaxe && shovel && tiles[this.x][this.y].type == tileType.exitOpen){
+            gameWin();
         }
     }
 
@@ -99,7 +98,7 @@ public class player extends Tile {
     public boolean collision(int x, int y, Tile[][] tiles) {return !tiles[this.x + x][this.y + y].traversable;}
     //Checks if the tile that the player is moving towards is traversable
 
-    public void game_win(){
+    public void gameWin(){
         //Displays the win menu
         next_level.tile_image.setX(0);
         next_level.tile_image.setY(0);
@@ -108,22 +107,22 @@ public class player extends Tile {
         sounds.win();
     }
 
-    public void item_found(Tile[][] tiles){
+    public void itemFound(Tile[][] tiles){
         //Checks if the player is standing on the pickaxe or shovel
-        if(tiles[this.x][this.y].tile_type == 4){
+        if(tiles[this.x][this.y].type == tileType.pickaxe){
             pickaxe = true;
-            tiles[this.x][this.y].assign_tile_type(2);
+            tiles[this.x][this.y].assignTileType(tileType.flatGround.getId());
             pickaxe_icon_tile.tile_image.toFront();
             sounds.pickup();
-        } else if(tiles[this.x][this.y].tile_type == 5) {
+        } else if(tiles[this.x][this.y].type == tileType.shovel) {
             shovel = true;
-            tiles[this.x][this.y].assign_tile_type(2);
+            tiles[this.x][this.y].assignTileType(tileType.flatGround.getId());
             shovel_icon_tile.tile_image.toFront();
             sounds.pickup();
         }
     }
 
-    public void damage_taken(Tile[][] tiles){
+    public void damageTaken(Tile[][] tiles){
         //Checks if the player is standing on a hole, and updates to the game lost menu if true
         if(tiles[this.x][this.y].damaging){
             lose = true;
@@ -135,47 +134,47 @@ public class player extends Tile {
         }
     }
 
-    public void break_boulder_or_fill_hole(Tile[][] tiles){
+    public void breakBoulderOrFillHole(Tile[][] tiles){
         //Breaks a boulder or fills hole in the direction the player is facing
         switch(direction){
             case 1:
-                if (tiles[x][y - 1].tile_type == 1 && pickaxe_use && pickaxe) {
-                    tiles[x][y - 1].assign_tile_type(2);
-                    sounds.rock_break();
+                if (tiles[x][y - 1].type == tileType.rock && pickaxe_use && pickaxe) {
+                    tiles[x][y - 1].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     pickaxe_use = false;
-                } else if (tiles[x][y - 1].tile_type == 8 && shovel_use && shovel){
-                    tiles[x][y - 1].assign_tile_type(2);
-                    sounds.rock_break();
+                } else if (tiles[x][y - 1].type == tileType.hole && shovel_use && shovel){
+                    tiles[x][y - 1].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     shovel_use = false;
                 }
             case 2:
-                if (tiles[x + 1][y].tile_type == 1 && pickaxe_use && pickaxe) {
-                    tiles[x + 1][y].assign_tile_type(2);
-                    sounds.rock_break();
+                if (tiles[x + 1][y].type == tileType.rock && pickaxe_use && pickaxe) {
+                    tiles[x + 1][y].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     pickaxe_use = false;
-                }else if (tiles[x + 1][y].tile_type == 8 && shovel_use && shovel){
-                    tiles[x + 1][y].assign_tile_type(2);
-                    sounds.rock_break();
+                }else if (tiles[x + 1][y].type == tileType.hole && shovel_use && shovel){
+                    tiles[x + 1][y].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     shovel_use = false;
                 }
             case 3:
-                if (tiles[x][y + 1].tile_type == 1 && pickaxe_use && pickaxe) {
-                    tiles[x][y + 1].assign_tile_type(2);
-                    sounds.rock_break();
+                if (tiles[x][y + 1].type == tileType.rock && pickaxe_use && pickaxe) {
+                    tiles[x][y + 1].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     pickaxe_use = false;
-                }else if (tiles[x][y + 1].tile_type == 8 && shovel_use && shovel){
-                    tiles[x][y + 1].assign_tile_type(2);
-                    sounds.rock_break();
+                }else if (tiles[x][y + 1].type == tileType.hole && shovel_use && shovel){
+                    tiles[x][y + 1].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     shovel_use = false;
                 }
             case 4:
-                if (tiles[x - 1][y].tile_type == 1 && pickaxe_use && pickaxe) {
-                    tiles[x - 1][y].assign_tile_type(2);
-                    sounds.rock_break();
+                if (tiles[x - 1][y].type == tileType.rock && pickaxe_use && pickaxe) {
+                    tiles[x - 1][y].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     pickaxe_use = false;
-                }else if (tiles[x - 1][y].tile_type == 8 && shovel_use && shovel){
-                    tiles[x - 1][y].assign_tile_type(2);
-                    sounds.rock_break();
+                }else if (tiles[x - 1][y].type == tileType.hole && shovel_use && shovel){
+                    tiles[x - 1][y].assignTileType(tileType.flatGround.getId());
+                    sounds.rockBreak();
                     shovel_use = false;
                 }
         }
@@ -195,7 +194,7 @@ public class player extends Tile {
         shovel = false;
         x = 7;
         y = 4;
-        player_move(0,0, tiles);
+        playerMove(0,0, tiles);
         pickaxe_use = true;
         shovel_use = true;
     }

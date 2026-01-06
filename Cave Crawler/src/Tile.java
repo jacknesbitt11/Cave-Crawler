@@ -30,6 +30,27 @@ public class Tile {
     static  Image pickaxe_icon = new Image("pickaxe-icon.png");
     static  Image shovel_icon = new Image("shovel-icon.png");
     static  Image hole = new Image("hole.png");
+    public tileType type;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -52,14 +73,14 @@ public class Tile {
                 x = 0;
             }
             tiles[x][y] = new Tile(x * TILE_UNIT, y * TILE_UNIT);
-            tiles[x][y].assign_tile_type(map.map[x][y]);
+            tiles[x][y].assignTileType(map.map[x][y]);
             tiles[x][y].generateTile();
             tiles[x][y].tile_type = map.map[x][y];
             x++;
         }
     }
 
-    public static void tile_next_level(ReadCSVFile map, Tile[][] tiles){
+    public static void tileNextLevel(ReadCSVFile map, Tile[][] tiles){
         //Similar to map_all_tiles but only sets the images and tile properties, it doesn't create any new tiles
         int x = 0;
         int y = 0;
@@ -70,18 +91,22 @@ public class Tile {
             }
             tiles[x][y].x = x * TILE_UNIT;
             tiles[x][y].y = y * TILE_UNIT;
-            tiles[x][y].assign_tile_type(map.map[x][y]);
+            tiles[x][y].assignTileType(map.map[x][y]);
         x++;
         }
 
 
     }
 
-    public void assign_tile_type(int type){
+    public void assignTileType(int id){
+        type = tileType.fromId(id);
+
+
+
         //Passed the number from the csv file and a specific tile, assigns all the properties according to the tile type from the csv file
         double random;
         switch (type) {
-            case 1:
+            case rock:
                 //rock, randomly picks an image between rock1 and rock2
                random = Math.random();
                 if(random > 0.75){
@@ -93,7 +118,7 @@ public class Tile {
                 traversable = false;
                 damaging = false;
                 break;
-            case 2:
+            case flatGround:
                 //flatground, randomly picks an image between flatground1, flatground2 and flatground3
                 random = Math.random();
                 if(random > 0.95){
@@ -108,25 +133,25 @@ public class Tile {
                 damaging = false;
 
                 break;
-            case 3:
+            case border:
                 //border
                 tile_image.setImage(border);
                 traversable = false;
                 damaging = false;
                 break;
-            case 4:
+            case pickaxe:
                 //pickaxe
                 tile_image.setImage(pickaxe);
                 traversable = true;
                 damaging = false;
                 break;
-            case 5:
+            case shovel:
                 //shovel
                 tile_image.setImage(shovel);
                 traversable = true;
                 damaging = false;
                 break;
-            case 6:
+            case exitClosed:
                 //exit closed, the location is saved so that the tile can be updated easily later
                 exit_x = x/TILE_UNIT;
                 exit_y = y/TILE_UNIT;
@@ -137,21 +162,19 @@ public class Tile {
                 System.out.println(exit_y);
 
                 break;
-            case 7:
+            case exitOpen:
                 //exit open
                 tile_image.setImage(exit_open);
                 traversable = true;
                 damaging = false;
                 break;
-            case 8:
+            case hole:
                 //hole
                 tile_image.setImage(hole);
                 traversable = true;
                 damaging = true;
                 break;
         }
-        tile_type = type;
-
     }
 
     public void move(int x, int y) {
