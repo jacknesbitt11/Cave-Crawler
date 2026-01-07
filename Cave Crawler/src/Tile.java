@@ -4,56 +4,26 @@ import javafx.scene.image.*;
 
 
 public class Tile {
-    public final static int TILE_UNIT = 128;
-    static Group root;
+    protected static Group root;
     private int x;
     private int y;
-    static int exit_x = 0;
-    static int exit_y = 0;
-    ImageView tile_image = new ImageView(new Image("character-up.png"));
-    boolean traversable;
-    boolean damaging;
-    int tile_type;
-    static  Image rock1 = new Image("rock1.png");
-    static  Image rock2 = new Image("rock2.png");
-    static  Image flatground1 = new Image("flatground1.png");
-    static  Image border = new Image("border.png");
-    static  Image edge_bottom = new Image("edge-bottom.png");
-    static  Image black = new Image("black.png");
-    static  Image pickaxe = new Image("pickaxe.png");
-    static  Image shovel = new Image("shovel.png");
-    static  Image exit_open = new Image("exit-open.png");
-    static  Image exit_closed = new Image("exit-closed.png");
-    static  Image edge_right = new Image("edge-right.png");
-    static  Image flatground2 = new Image("flatground2.png");
-    static  Image flatground3 = new Image("flatground3.png");
-    static  Image pickaxe_icon = new Image("pickaxe-icon.png");
-    static  Image shovel_icon = new Image("shovel-icon.png");
-    static  Image hole = new Image("hole.png");
-    public tileType type;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    protected static int exit_x = 0;
+    protected static int exit_y = 0;
+    protected final ImageView tile_image = new ImageView(new Image("res/character-up.png"));
+    protected boolean isTraversable;
+    protected boolean isDamaging;
+    public static final  Image rock1 = new Image("res/rock1.png");
+    private static final  Image rock2 = new Image("res/rock2.png");
+    private static final  Image flatground1 = new Image("res/flatground1.png");
+    private static final  Image border = new Image("res/border.png");
+    private static final  Image pickaxe = new Image("res/pickaxe.png");
+    private static final  Image shovel = new Image("res/shovel.png");
+    private static final  Image exit_open = new Image("res/exit-open.png");
+    private static final  Image exit_closed = new Image("res/exit-closed.png");
+    private static final  Image flatground2 = new Image("res/flatground2.png");
+    private static final  Image flatground3 = new Image("res/flatground3.png");
+    private static final  Image hole = new Image("res/hole.png");
+    public TileType type;
 
 
     public void generateTile() {
@@ -72,10 +42,9 @@ public class Tile {
                 y++;
                 x = 0;
             }
-            tiles[x][y] = new Tile(x * TILE_UNIT, y * TILE_UNIT);
+            tiles[x][y] = new Tile(x * Constants.TILE_UNIT, y * Constants.TILE_UNIT);
             tiles[x][y].assignTileType(map.map[x][y]);
             tiles[x][y].generateTile();
-            tiles[x][y].tile_type = map.map[x][y];
             x++;
         }
     }
@@ -89,8 +58,8 @@ public class Tile {
                 y++;
                 x = 0;
             }
-            tiles[x][y].x = x * TILE_UNIT;
-            tiles[x][y].y = y * TILE_UNIT;
+            tiles[x][y].x = x * Constants.TILE_UNIT;
+            tiles[x][y].y = y * Constants.TILE_UNIT;
             tiles[x][y].assignTileType(map.map[x][y]);
         x++;
         }
@@ -99,14 +68,14 @@ public class Tile {
     }
 
     public void assignTileType(int id){
-        type = tileType.fromId(id);
+        type = TileType.fromId(id);
 
 
 
         //Passed the number from the csv file and a specific tile, assigns all the properties according to the tile type from the csv file
         double random;
         switch (type) {
-            case rock:
+            case ROCK:
                 //rock, randomly picks an image between rock1 and rock2
                random = Math.random();
                 if(random > 0.75){
@@ -115,10 +84,10 @@ public class Tile {
                     tile_image.setImage(rock1);
 
                 }
-                traversable = false;
-                damaging = false;
+                isTraversable = false;
+                isDamaging = false;
                 break;
-            case flatGround:
+            case FLAT_GROUND:
                 //flatground, randomly picks an image between flatground1, flatground2 and flatground3
                 random = Math.random();
                 if(random > 0.95){
@@ -129,50 +98,50 @@ public class Tile {
                 } else {
                     tile_image.setImage(flatground1);
                 }
-                traversable = true;
-                damaging = false;
+                isTraversable = true;
+                isDamaging = false;
 
                 break;
-            case border:
+            case BORDER:
                 //border
                 tile_image.setImage(border);
-                traversable = false;
-                damaging = false;
+                isTraversable = false;
+                isDamaging = false;
                 break;
-            case pickaxe:
+            case PICKAXE:
                 //pickaxe
                 tile_image.setImage(pickaxe);
-                traversable = true;
-                damaging = false;
+                isTraversable = true;
+                isDamaging = false;
                 break;
-            case shovel:
+            case SHOVEL:
                 //shovel
                 tile_image.setImage(shovel);
-                traversable = true;
-                damaging = false;
+                isTraversable = true;
+                isDamaging = false;
                 break;
-            case exitClosed:
+            case EXIT_CLOSED:
                 //exit closed, the location is saved so that the tile can be updated easily later
-                exit_x = x/TILE_UNIT;
-                exit_y = y/TILE_UNIT;
+                exit_x = x/Constants.TILE_UNIT;
+                exit_y = y/Constants.TILE_UNIT;
                 tile_image.setImage(exit_closed);
-                traversable = false;
-                damaging = false;
+                isTraversable = false;
+                isDamaging = false;
                 System.out.println(exit_x);
                 System.out.println(exit_y);
 
                 break;
-            case exitOpen:
+            case EXIT_OPEN:
                 //exit open
                 tile_image.setImage(exit_open);
-                traversable = true;
-                damaging = false;
+                isTraversable = true;
+                isDamaging = false;
                 break;
-            case hole:
+            case HOLE:
                 //hole
                 tile_image.setImage(hole);
-                traversable = true;
-                damaging = true;
+                isTraversable = true;
+                isDamaging = true;
                 break;
         }
     }

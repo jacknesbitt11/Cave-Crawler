@@ -773,7 +773,7 @@ Mozilla Public License Version 2.0
     License. For legal entities, "You" includes any entity that
     controls, is controlled by, or is under common control with You. For
     purposes of this definition, "control" means (a) the power, direct
-    or indirect, to cause the direction or management of such entity,
+    or indirect, to cause the Direction or management of such entity,
     whether by contract or otherwise, or (b) ownership of more than
     fifty percent (50%) of the outstanding shares or beneficial
     ownership of such entity.
@@ -1098,7 +1098,7 @@ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
    other entities that control, are controlled by, or are under common
    control with that entity. For the purposes of this definition,
    "control" means (i) the power, direct or indirect, to cause the
-   direction or management of such entity, whether by contract or
+   Direction or management of such entity, whether by contract or
    otherwise, or (ii) ownership of fifty percent (50%) or more of the
    outstanding shares, or (iii) beneficial ownership of such entity.
 

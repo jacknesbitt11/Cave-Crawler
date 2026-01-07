@@ -9,16 +9,12 @@ import javafx.scene.image.Image;
 
 
 public class Main extends Application{
-    final static int NUMBER_OF_LEVELS = 5;
-
     public static void main(String[] args){
         launch(args);
     }
     @Override
     public void start(Stage stage) throws Exception {
-        //create groups, setup frame
         Group level = new Group();
-        Group next_level = new Group();
         Scene scene = new Scene(level, 1920, 1080, Color.BLACK);
         stage.setTitle("Cave Crawler");
         Image icon = Tile.rock1; //Sets icon
@@ -34,50 +30,50 @@ public class Main extends Application{
         //Main game loop
         ReadCSVFile mapLoader = new ReadCSVFile("src/map.csv");
         Tile[][] tiles = new Tile[mapLoader.width][mapLoader.height];
-        player player = new player();
+        Player player = new Player();
         Tile.mapAllTiles(mapLoader, tiles);
 
-        player.generateTile();
+        player.generatePlayer();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                int current_level = 1;
                 //Used to get all the keyboard inputs from the user, W through D are movement controls, so they check collision and update the direction the player is facing
                 switch (event.getCode()) {
                     case W:
                         if (player.collision(0, -1, tiles) || player.y == 1) {
-                            player.updateImage(1);
+                            player.updateImage(Direction.up);
                             break;
                         }
-                        player.playerMove(0, Tile.TILE_UNIT, tiles);
-                        player.updateImage(1);
+                        player.playerMove(0, Constants.TILE_UNIT, tiles);
                         break;
                     case A:
                         if (player.collision(-1, 0, tiles) || player.x == 1) {
-                            player.updateImage(4);
+                            player.updateImage(Direction.left);
                             break;
                         }
-                        player.playerMove(Tile.TILE_UNIT, 0, tiles);
+                        player.playerMove(Constants.TILE_UNIT, 0, tiles);
                         break;
                     case S:
                         if (player.collision(0, 1, tiles) || player.y == mapLoader.height - 2) {
-                            player.updateImage(3);
+                            player.updateImage(Direction.down);
                             break;
                         }
-                        player.playerMove(0, -Tile.TILE_UNIT, tiles);
+                        player.playerMove(0, -Constants.TILE_UNIT, tiles);
                         break;
                     case D:
                         if (player.collision(1, 0, tiles) || player.x == mapLoader.width - 2) {
-                            player.updateImage(2);
+                            player.updateImage(Direction.right);
                             break;
                         }
-                        player.playerMove(-Tile.TILE_UNIT, 0, tiles);
+                        player.playerMove(-Constants.TILE_UNIT, 0, tiles);
                         break;
                     //N and R are used to advance to the next level or restart the current level
                     case N:
                         if(player.win) {
-                            if(player.current_level < NUMBER_OF_LEVELS){player.current_level++;}
+                            if(current_level < Constants.NUMBER_OF_LEVELS){current_level++;}
 
-                            mapLoader.map = mapLoader.load_array("src/map" + player.current_level + ".csv");
+                            mapLoader.map = mapLoader.load_array("src/map" + current_level + ".csv");
                             Tile.tileNextLevel(mapLoader, tiles);
                             player.reset(tiles);
 
