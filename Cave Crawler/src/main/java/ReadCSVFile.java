@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +18,9 @@ public class ReadCSVFile {
         List<List<Integer>> columns = new ArrayList<>();
         int expected_column_count = 0;
         int row_index = 0;
+        InputStream input = getClass().getClassLoader().getResourceAsStream(file_name);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file_name))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(input))) {
             String line;
             while ((line = br.readLine()) != null) {
                 int[] row_values = parse(line);

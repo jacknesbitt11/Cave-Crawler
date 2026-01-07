@@ -7,14 +7,24 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 
 public class Main extends Application{
     int current_level = 1;
     public static void main(String[] args){
         launch(args);
+
+
+
+
+
     }
     @Override
     public void start(Stage stage) throws Exception {
+        Sounds.loadSounds();
         Group level = new Group();
         Scene scene = new Scene(level, 1920, 1080, Color.BLACK);
         stage.setTitle("Cave Crawler");
@@ -29,7 +39,7 @@ public class Main extends Application{
     }
     public void game(Scene scene) {
         //Main game loop
-        ReadCSVFile mapLoader = new ReadCSVFile("src/map.csv");
+        ReadCSVFile mapLoader = new ReadCSVFile("map.csv");
         Tile[][] tiles = new Tile[mapLoader.width][mapLoader.height];
         Player player = new Player();
         Tile.mapAllTiles(mapLoader, tiles);
@@ -74,7 +84,7 @@ public class Main extends Application{
                             if(current_level < Constants.NUMBER_OF_LEVELS){
                                 current_level++;
                             }
-                            mapLoader.map = mapLoader.load_array("src/map" + current_level + ".csv");
+                            mapLoader.map = mapLoader.load_array("map" + current_level + ".csv");
                             Tile.tileNextLevel(mapLoader, tiles);
                             player.reset(tiles);
 

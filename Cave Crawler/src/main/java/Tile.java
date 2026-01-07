@@ -9,20 +9,20 @@ public class Tile {
     private int y;
     protected static int exit_x = 0;
     protected static int exit_y = 0;
-    protected final ImageView tile_image = new ImageView(new Image("res/character-up.png"));
+    protected final ImageView tile_image = new ImageView(new Image("character-up.png"));
     protected boolean isTraversable;
     protected boolean isDamaging;
-    public static final  Image rock1 = new Image("res/rock1.png");
-    private static final  Image rock2 = new Image("res/rock2.png");
-    private static final  Image flatground1 = new Image("res/flatground1.png");
-    private static final  Image border = new Image("res/border.png");
-    private static final  Image pickaxe = new Image("res/pickaxe.png");
-    private static final  Image shovel = new Image("res/shovel.png");
-    private static final  Image exit_open = new Image("res/exit-open.png");
-    private static final  Image exit_closed = new Image("res/exit-closed.png");
-    private static final  Image flatground2 = new Image("res/flatground2.png");
-    private static final  Image flatground3 = new Image("res/flatground3.png");
-    private static final  Image hole = new Image("res/hole.png");
+    public static final  Image rock1 = new Image("rock1.png");
+    private static final  Image rock2 = new Image("rock2.png");
+    private static final  Image flatground1 = new Image("flatground1.png");
+    private static final  Image border = new Image("border.png");
+    private static final  Image pickaxe = new Image("pickaxe.png");
+    private static final  Image shovel = new Image("shovel.png");
+    private static final  Image exit_open = new Image("exit-open.png");
+    private static final  Image exit_closed = new Image("exit-closed.png");
+    private static final  Image flatground2 = new Image("flatground2.png");
+    private static final  Image flatground3 = new Image("flatground3.png");
+    private static final  Image hole = new Image("hole.png");
     public TileType type;
 
 
@@ -72,11 +72,9 @@ public class Tile {
 
 
 
-        //Passed the number from the csv file and a specific tile, assigns all the properties according to the tile type from the csv file
         double random;
         switch (type) {
             case ROCK:
-                //rock, randomly picks an image between rock1 and rock2
                random = Math.random();
                 if(random > 0.75){
                     tile_image.setImage(rock2);
@@ -88,7 +86,6 @@ public class Tile {
                 isDamaging = false;
                 break;
             case FLAT_GROUND:
-                //flatground, randomly picks an image between flatground1, flatground2 and flatground3
                 random = Math.random();
                 if(random > 0.95){
                     tile_image.setImage(flatground2);
@@ -103,25 +100,21 @@ public class Tile {
 
                 break;
             case BORDER:
-                //border
                 tile_image.setImage(border);
                 isTraversable = false;
                 isDamaging = false;
                 break;
             case PICKAXE:
-                //pickaxe
                 tile_image.setImage(pickaxe);
                 isTraversable = true;
                 isDamaging = false;
                 break;
             case SHOVEL:
-                //shovel
                 tile_image.setImage(shovel);
                 isTraversable = true;
                 isDamaging = false;
                 break;
             case EXIT_CLOSED:
-                //exit closed, the location is saved so that the tile can be updated easily later
                 exit_x = x/Constants.TILE_UNIT;
                 exit_y = y/Constants.TILE_UNIT;
                 tile_image.setImage(exit_closed);
@@ -132,13 +125,11 @@ public class Tile {
 
                 break;
             case EXIT_OPEN:
-                //exit open
                 tile_image.setImage(exit_open);
                 isTraversable = true;
                 isDamaging = false;
                 break;
             case HOLE:
-                //hole
                 tile_image.setImage(hole);
                 isTraversable = true;
                 isDamaging = true;

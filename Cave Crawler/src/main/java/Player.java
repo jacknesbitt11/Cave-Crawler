@@ -2,17 +2,17 @@ import javafx.scene.image.*;
 
 
 public class Player {
-    private final Image up = new Image("res/character-up.png");
-    private final Image down = new Image("res/character-down.png");
-    private final Image left = new Image("res/character-left.png");
-    private final Image right = new Image("res/character-right.png");
-    private final static  Image pickaxe_icon = new Image("res/pickaxe-icon.png");
-    private final static  Image shovel_icon = new Image("res/shovel-icon.png");
+    private final Image up = new Image("character-up.png");
+    private final Image down = new Image("character-down.png");
+    private final Image left = new Image("character-left.png");
+    private final Image right = new Image("character-right.png");
+    private final static  Image pickaxe_icon = new Image("pickaxe-icon.png");
+    private final static  Image shovel_icon = new Image("shovel-icon.png");
     private final Tile next_level = new Tile(-1920, -1080);
     private final Tile lose_level = new Tile(-1920, -1080);
     private final Tile pickaxe_icon_tile = new Tile(0,0);
     private final Tile shovel_icon_tile = new Tile(Constants.TILE_UNIT, 0);
-    private final ImageView playerImage = new ImageView(new Image("res/character-up.png"));
+    private final ImageView playerImage = new ImageView(new Image("character-up.png"));
 
     public int x = Constants.player_default_x;
     public int y = Constants.player_default_y;
@@ -27,8 +27,8 @@ public class Player {
     Direction direction = Direction.up;
 
     public Player() {
-        Image lose_level_image = new Image("res/level-lose.png");
-        Image next_level_image = new Image("res/level_win.png");
+        Image lose_level_image = new Image("level-lose.png");
+        Image next_level_image = new Image("level_win.png");
         lose_level.generateTile();
         lose_level.tile_image.setImage(lose_level_image);
         pickaxe_icon_tile.generateTile();
@@ -82,7 +82,7 @@ public class Player {
             this.x++;
             this.updateImage(Direction.right);
         }
-        sounds.walkingSound();
+        Sounds.walkingSound();
 
 
         //Various checks preformed on every tile move
@@ -109,7 +109,7 @@ public class Player {
         next_level.tile_image.setY(0);
         next_level.tile_image.toFront();
         win = true;
-        sounds.win();
+        Sounds.win();
     }
 
     public void itemFound(Tile[][] tiles){
@@ -118,12 +118,12 @@ public class Player {
             hasPickaxe = true;
             tiles[this.x][this.y].assignTileType(TileType.FLAT_GROUND.getId());
             pickaxe_icon_tile.tile_image.toFront();
-            sounds.pickup();
+            Sounds.pickup();
         } else if(tiles[this.x][this.y].type == TileType.SHOVEL) {
             hasShovel = true;
             tiles[this.x][this.y].assignTileType(TileType.FLAT_GROUND.getId());
             shovel_icon_tile.tile_image.toFront();
-            sounds.pickup();
+            Sounds.pickup();
         }
     }
 
@@ -134,7 +134,7 @@ public class Player {
             lose_level.tile_image.setX(0);
             lose_level.tile_image.setY(0);
             lose_level.tile_image.toFront();
-            sounds.lose();
+            Sounds.lose();
 
         }
     }
@@ -145,41 +145,41 @@ public class Player {
             case up:
                 if (tiles[x][y - 1].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x][y - 1].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     pickaxeUse = false;
                 } else if (tiles[x][y - 1].type == TileType.HOLE && shovelUse && hasShovel){
                     tiles[x][y - 1].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     shovelUse = false;
                 }
             case right:
                 if (tiles[x + 1][y].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x + 1][y].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     pickaxeUse = false;
                 }else if (tiles[x + 1][y].type == TileType.HOLE && shovelUse && hasShovel){
                     tiles[x + 1][y].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     shovelUse = false;
                 }
             case left:
                 if (tiles[x][y + 1].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x][y + 1].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     pickaxeUse = false;
                 }else if (tiles[x][y + 1].type == TileType.HOLE && shovelUse && hasShovel){
                     tiles[x][y + 1].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     shovelUse = false;
                 }
             case down:
                 if (tiles[x - 1][y].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x - 1][y].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     pickaxeUse = false;
                 }else if (tiles[x - 1][y].type == TileType.HOLE && shovelUse && hasShovel){
                     tiles[x - 1][y].assignTileType(TileType.FLAT_GROUND.getId());
-                    sounds.rockBreak();
+                    Sounds.rockBreak();
                     shovelUse = false;
                 }
         }
