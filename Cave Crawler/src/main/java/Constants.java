@@ -1,3 +1,4 @@
+package com.nesbot.cavecrawler;
 public class Constants {
     public static final int NUMBER_OF_LEVELS = 5;
     public static final int TILE_UNIT = 128;

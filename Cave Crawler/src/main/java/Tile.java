@@ -1,3 +1,5 @@
+package com.nesbot.cavecrawler;
+
 import javafx.scene.Group;
 import javafx.scene.image.*;
 

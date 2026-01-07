@@ -1,5 +1,7 @@
-import javafx.scene.image.*;
+package com.nesbot.cavecrawler;
 
+
+import javafx.scene.image.*;
 
 public class Player {
     private final Image up = new Image("character-up.png");
