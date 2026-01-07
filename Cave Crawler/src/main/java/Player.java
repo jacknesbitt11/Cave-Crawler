@@ -82,6 +82,7 @@ public class Player {
             this.x++;
             this.updateImage(Direction.right);
         }
+
         Sounds.walkingSound();
 
 
@@ -162,7 +163,7 @@ public class Player {
                     Sounds.rockBreak();
                     shovelUse = false;
                 }
-            case left:
+            case down:
                 if (tiles[x][y + 1].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x][y + 1].assignTileType(TileType.FLAT_GROUND.getId());
                     Sounds.rockBreak();
@@ -172,7 +173,7 @@ public class Player {
                     Sounds.rockBreak();
                     shovelUse = false;
                 }
-            case down:
+            case left:
                 if (tiles[x - 1][y].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x - 1][y].assignTileType(TileType.FLAT_GROUND.getId());
                     Sounds.rockBreak();

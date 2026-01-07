@@ -45,22 +45,27 @@ public class Sounds {
         }
     }
 
-    public static void walkingSound() {
+    public static void walkingSound(){
+        walking.setFramePosition(0);
         walking.start();
     }
 
     public static void pickup() {
+        pickup.setFramePosition(0);
         pickup.start();
     }
 
     public static void win() {
+        win.setFramePosition(0);
         win.start();
 
     }
     public static void lose() {
+        lose.setFramePosition(0);
         lose.start();
     }
     public static void rockBreak() {
+        rock.setFramePosition(0);
         rock.start();
     }
 
