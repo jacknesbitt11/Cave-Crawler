@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 
 
 public class Main extends Application{
+    int current_level = 1;
     public static void main(String[] args){
         launch(args);
     }
@@ -37,7 +38,6 @@ public class Main extends Application{
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                int current_level = 1;
                 //Used to get all the keyboard inputs from the user, W through D are movement controls, so they check collision and update the direction the player is facing
                 switch (event.getCode()) {
                     case W:
@@ -71,8 +71,9 @@ public class Main extends Application{
                     //N and R are used to advance to the next level or restart the current level
                     case N:
                         if(player.win) {
-                            if(current_level < Constants.NUMBER_OF_LEVELS){current_level++;}
-
+                            if(current_level < Constants.NUMBER_OF_LEVELS){
+                                current_level++;
+                            }
                             mapLoader.map = mapLoader.load_array("src/map" + current_level + ".csv");
                             Tile.tileNextLevel(mapLoader, tiles);
                             player.reset(tiles);
