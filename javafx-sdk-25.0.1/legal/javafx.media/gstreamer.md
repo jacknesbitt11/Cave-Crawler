@@ -107,7 +107,7 @@ Copyright (C) 2006 Josep Torra <josep@fluendo.com>
 Copyright (C) 2006 Mathieu Garcia  <matthieu@fluendo.com>
 Copyright (C) 2006 Stefan Kost <ensonic@sonicpulse.de>
 Copyright (C) 2010-2012 Alexander Saprykin <xelfium@gmail.com>
-Copyright (C) 2011, Hewlett-Packard Development Company, L.Player.
+Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
 Copyright (C) 2008 Mark Nauwelaerts <mnauw@users.sourceforge.net>
 Copyright (C) 2006 Edward Hervey <edward@fluendo.com>
 Copyright (C) 2001 RidgeRun (http://www.ridgerun.com/)
