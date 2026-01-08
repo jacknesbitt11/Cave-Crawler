@@ -1,21 +1,18 @@
 package com.nesbot.cavecrawler;
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sounds {
-
     private static Clip walking;
     private static Clip pickup;
     private static Clip win;
     private static Clip lose;
     private static Clip rock;
-
 
     public static void loadSounds(){
         walking = load("walking.wav");
@@ -23,10 +20,6 @@ public class Sounds {
         win = load("win.wav");
         lose = load("lose.wav");
         rock = load("rock.wav");
-
-
-
-
     }
 
     private static Clip load(String file){
@@ -34,8 +27,8 @@ public class Sounds {
             InputStream input = Sounds.class.getClassLoader().getResourceAsStream(file);
             AudioInputStream sound = AudioSystem.getAudioInputStream(input);
             Clip clip = AudioSystem.getClip();
-
             clip.open(sound);
+
             return clip;
 
 

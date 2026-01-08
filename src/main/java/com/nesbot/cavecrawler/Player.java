@@ -1,6 +1,5 @@
 package com.nesbot.cavecrawler;
 
-
 import javafx.scene.image.*;
 
 public class Player {
@@ -16,8 +15,8 @@ public class Player {
     private final Tile shovel_icon_tile = new Tile(Constants.TILE_UNIT, 0);
     private final ImageView playerImage = new ImageView(new Image("character-up.png"));
 
-    public int x = Constants.player_default_x;
-    public int y = Constants.player_default_y;
+    public int x = Constants.PLAYER_DEFAULT_X;
+    public int y = Constants.PLAYER_DEFAULT_Y;
     public boolean win = false;
     public boolean lose = false;
     private boolean hasPickaxe = false;
@@ -25,8 +24,7 @@ public class Player {
     private boolean pickaxeUse = true;
     private boolean shovelUse = true;
 
-
-    Direction direction = Direction.up;
+    private Direction direction = Direction.UP;
 
     public Player() {
         Image lose_level_image = new Image("level-lose.png");
@@ -45,25 +43,26 @@ public class Player {
     public void updateImage(Direction direction){
         //Called when the player moves, updates the character image to face the correct direction
             switch (direction) {
-                case up:
+                case UP:
                     playerImage.setImage(up);
-                    this.direction = Direction.up;
+                    this.direction = Direction.UP;
                     break;
-                case right:
+                case RIGHT:
                     playerImage.setImage(right);
-                    this.direction = Direction.right;
+                    this.direction = Direction.RIGHT;
                     break;
-                case down:
+                case DOWN:
                     playerImage.setImage(down);
-                    this.direction = Direction.down;
+                    this.direction = Direction.DOWN;
                     break;
-                case left:
+                case LEFT:
                     playerImage.setImage(left);
-                    this.direction = Direction.left;
+                    this.direction = Direction.LEFT;
 
                     break;
             }
     }
+
     public void playerMove(int x, int y, Tile[][] tiles){
         //Moves all the tiles in the given direction
         for (Tile[] tile_row : tiles) {
@@ -73,16 +72,16 @@ public class Player {
         }
         if(x == 0 && y == Constants.TILE_UNIT){
             this.y--;
-            this.updateImage(Direction.up);
+            this.updateImage(Direction.UP);
         } else if(x == Constants.TILE_UNIT && y == 0){
             this.x--;
-            this.updateImage(Direction.left);
+            this.updateImage(Direction.LEFT);
         } else if (x == 0 && y == -Constants.TILE_UNIT){
             this.y++;
-            this.updateImage(Direction.down);
+            this.updateImage(Direction.DOWN);
         } else if (x == -Constants.TILE_UNIT && y == 0){
             this.x++;
-            this.updateImage(Direction.right);
+            this.updateImage(Direction.RIGHT);
         }
 
         Sounds.walkingSound();
@@ -99,9 +98,6 @@ public class Player {
             gameWin();
         }
     }
-
-
-
 
     public boolean collision(int x, int y, Tile[][] tiles) {return !tiles[this.x + x][this.y + y].isTraversable;}
     //Checks if the tile that the player is moving towards is traversable
@@ -145,7 +141,7 @@ public class Player {
     public void breakBoulderOrFillHole(Tile[][] tiles){
         //Breaks a boulder or fills hole in the direction the player is facing
         switch(direction){
-            case up:
+            case UP:
                 if (tiles[x][y - 1].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x][y - 1].assignTileType(TileType.FLAT_GROUND.getId());
                     Sounds.rockBreak();
@@ -155,7 +151,7 @@ public class Player {
                     Sounds.rockBreak();
                     shovelUse = false;
                 }
-            case right:
+            case RIGHT:
                 if (tiles[x + 1][y].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x + 1][y].assignTileType(TileType.FLAT_GROUND.getId());
                     Sounds.rockBreak();
@@ -165,7 +161,7 @@ public class Player {
                     Sounds.rockBreak();
                     shovelUse = false;
                 }
-            case down:
+            case DOWN:
                 if (tiles[x][y + 1].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x][y + 1].assignTileType(TileType.FLAT_GROUND.getId());
                     Sounds.rockBreak();
@@ -175,7 +171,7 @@ public class Player {
                     Sounds.rockBreak();
                     shovelUse = false;
                 }
-            case left:
+            case LEFT:
                 if (tiles[x - 1][y].type == TileType.ROCK && pickaxeUse && hasPickaxe) {
                     tiles[x - 1][y].assignTileType(TileType.FLAT_GROUND.getId());
                     Sounds.rockBreak();
@@ -194,9 +190,6 @@ public class Player {
         Tile.root.getChildren().add(playerImage);
     }
 
-
-
-
     public void reset(Tile[][] tiles){
         //Resets all the player variables back to their defaults
         lose_level.tile_image.toBack();
@@ -208,8 +201,8 @@ public class Player {
         playerImage.toFront();
         hasPickaxe = false;
         hasShovel = false;
-        x = Constants.player_default_x;
-        y = Constants.player_default_y;
+        x = Constants.PLAYER_DEFAULT_X;
+        y = Constants.PLAYER_DEFAULT_Y;
         playerMove(0,0, tiles);
         pickaxeUse = true;
         shovelUse = true;

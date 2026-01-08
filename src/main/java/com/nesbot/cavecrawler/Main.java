@@ -1,4 +1,5 @@
 package com.nesbot.cavecrawler;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -8,13 +9,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 
 public class Main extends Application{
-    int current_level = 1;
+    int currentLevel = 1;
     public static void main(String[] args){
         launch(args);
 
@@ -53,28 +50,28 @@ public class Main extends Application{
                 switch (event.getCode()) {
                     case W:
                         if (player.collision(0, -1, tiles) || player.y == 1) {
-                            player.updateImage(Direction.up);
+                            player.updateImage(Direction.UP);
                             break;
                         }
                         player.playerMove(0, Constants.TILE_UNIT, tiles);
                         break;
                     case A:
                         if (player.collision(-1, 0, tiles) || player.x == 1) {
-                            player.updateImage(Direction.left);
+                            player.updateImage(Direction.LEFT);
                             break;
                         }
                         player.playerMove(Constants.TILE_UNIT, 0, tiles);
                         break;
                     case S:
                         if (player.collision(0, 1, tiles) || player.y == mapLoader.height - 2) {
-                            player.updateImage(Direction.down);
+                            player.updateImage(Direction.DOWN);
                             break;
                         }
                         player.playerMove(0, -Constants.TILE_UNIT, tiles);
                         break;
                     case D:
                         if (player.collision(1, 0, tiles) || player.x == mapLoader.width - 2) {
-                            player.updateImage(Direction.right);
+                            player.updateImage(Direction.RIGHT);
                             break;
                         }
                         player.playerMove(-Constants.TILE_UNIT, 0, tiles);
@@ -82,10 +79,10 @@ public class Main extends Application{
                     //N and R are used to advance to the next level or restart the current level
                     case N:
                         if(player.win) {
-                            if(current_level < Constants.NUMBER_OF_LEVELS){
-                                current_level++;
+                            if(currentLevel < Constants.NUMBER_OF_LEVELS){
+                                currentLevel++;
                             }
-                            mapLoader.map = mapLoader.load_array("map" + current_level + ".csv");
+                            mapLoader.map = mapLoader.load_array("map" + currentLevel + ".csv");
                             Tile.tileNextLevel(mapLoader, tiles);
                             player.reset(tiles);
 
@@ -95,7 +92,6 @@ public class Main extends Application{
                         if(player.win || player.lose) {
                             Tile.tileNextLevel(mapLoader, tiles);
                             player.reset(tiles);
-
                         }
                         break;
                     // F is used to break a boulder when the player is holding a pickaxe

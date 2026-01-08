@@ -3,8 +3,6 @@ package com.nesbot.cavecrawler;
 import javafx.scene.Group;
 import javafx.scene.image.*;
 
-
-
 public class Tile {
     protected static Group root;
     private int x;
@@ -26,7 +24,6 @@ public class Tile {
     private static final  Image flatground3 = new Image("flatground3.png");
     private static final  Image hole = new Image("hole.png");
     public TileType type;
-
 
     public void generateTile() {
         //Used to generate a tile at the given X and Y coordinates
@@ -65,14 +62,10 @@ public class Tile {
             tiles[x][y].assignTileType(map.map[x][y]);
         x++;
         }
-
-
     }
 
     public void assignTileType(int id){
         type = TileType.fromId(id);
-
-
 
         double random;
         switch (type) {
@@ -82,10 +75,10 @@ public class Tile {
                     tile_image.setImage(rock2);
                 } else{
                     tile_image.setImage(rock1);
-
                 }
                 isTraversable = false;
                 isDamaging = false;
+
                 break;
             case FLAT_GROUND:
                 random = Math.random();
@@ -105,16 +98,19 @@ public class Tile {
                 tile_image.setImage(border);
                 isTraversable = false;
                 isDamaging = false;
+
                 break;
             case PICKAXE:
                 tile_image.setImage(pickaxe);
                 isTraversable = true;
                 isDamaging = false;
+
                 break;
             case SHOVEL:
                 tile_image.setImage(shovel);
                 isTraversable = true;
                 isDamaging = false;
+
                 break;
             case EXIT_CLOSED:
                 exit_x = x/Constants.TILE_UNIT;
@@ -130,11 +126,13 @@ public class Tile {
                 tile_image.setImage(exit_open);
                 isTraversable = true;
                 isDamaging = false;
+
                 break;
             case HOLE:
                 tile_image.setImage(hole);
                 isTraversable = true;
                 isDamaging = true;
+
                 break;
         }
     }
@@ -147,10 +145,6 @@ public class Tile {
         tile_image.setX(this.x);
         tile_image.setY(this.y);
     }
-
-
-
-
 
     Tile(int x, int y){
         this.x = x;
