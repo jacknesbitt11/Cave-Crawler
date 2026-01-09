@@ -72,17 +72,17 @@ public class CaveCrawler extends Application{
                         break;
                     //N and R are used to advance to the next level or restart the current level
                     case N:
-                        if(player.getIsWin()) {
+                        if(player.isWin()) {
                             if(currentMap < Constants.NUMBER_OF_LEVELS){
                                 currentMap++;
                             }
-                            mapLoader.loadArray("map" + currentMap + ".csv");
+                            mapLoader.loadMap("map" + currentMap + ".csv");
                             mapLoader.resetTiles(tiles);
                             player.reset(tiles);
                             break;
                         }
                     case R:
-                        if(player.getIsWin() || player.getIsLose()) {
+                        if(player.isWin() || player.isLose()) {
                             mapLoader.resetTiles(tiles);
                             player.reset(tiles);
                         }

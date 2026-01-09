@@ -11,12 +11,19 @@ public class MapLoader {
     private int[][] map;
 
     public MapLoader(String fileName){
-        loadArray(fileName);
+        loadMap(fileName);
     }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
     //Used to read in the map csv files, the csv is read in column by column so that x and y can be used uniformly
-
-
-    public void loadArray(String fileName) {
+    public void loadMap(String fileName) {
         List<List<Integer>> columns = new ArrayList<>();
         int expectedColumnCount = 0;
         int rowIndex = 0;
@@ -100,13 +107,5 @@ public class MapLoader {
             tiles[x][y].assignTileType(map[x][y]);
             x++;
         }
-    }
-
-    public int getWidth(){
-        return width;
-    }
-
-    public int getHeight(){
-        return height;
     }
 }

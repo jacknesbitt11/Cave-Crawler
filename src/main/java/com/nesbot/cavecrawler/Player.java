@@ -7,8 +7,8 @@ public class Player {
     private final Image down = new Image("character-down.png");
     private final Image left = new Image("character-left.png");
     private final Image right = new Image("character-right.png");
-    private final Tile nextMap = new Tile(-1920, -1080);
-    private final Tile playerLose = new Tile(-1920, -1080);
+    private final Tile nextMap = new Tile(-Constants.FRAME_WIDTH, -Constants.FRAME_HEIGHT);
+    private final Tile playerLose = new Tile(-Constants.FRAME_WIDTH, -Constants.FRAME_HEIGHT);
     private final Tile pickAxeIconTile = new Tile(0,0);
     private final Tile shovelIconTile = new Tile(Constants.TILE_UNIT, 0);
     private final ImageView playerImage = new ImageView(new Image("character-up.png"));
@@ -36,6 +36,22 @@ public class Player {
         playerImage.setX(0);
         playerImage.setY(0);
         Tile.getRoot().getChildren().add(playerImage);
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
+    }
+
+    public boolean isWin(){
+        return isWin;
+    }
+
+    public boolean isLose(){
+        return isLose;
     }
 
     public void updateImage(Direction direction){
@@ -177,21 +193,7 @@ public class Player {
         }
     }
 
-    public int getX(){
-        return x;
-    }
 
-    public int getY(){
-        return y;
-    }
-
-    public boolean getIsWin(){
-        return isWin;
-    }
-
-    public boolean getIsLose(){
-        return isWin;
-    }
 
     public void reset(Tile[][] tiles){
         //Resets all the player variables back to their defaults
