@@ -4,135 +4,135 @@ import javafx.scene.Group;
 import javafx.scene.image.*;
 
 public class Tile {
-    protected static Group root;
+    private static Group root;
     private int x;
     private int y;
-    protected static int exit_x = 0;
-    protected static int exit_y = 0;
-    protected final ImageView tile_image = new ImageView(new Image("character-up.png"));
+    protected static int exitX = 0;
+    protected static int exitY = 0;
+    private final ImageView tileImage = new ImageView(new Image("character-up.png"));
     protected boolean isTraversable;
     protected boolean isDamaging;
-    public static final  Image rock1 = new Image("rock1.png");
+    private static final  Image rock1 = new Image("rock1.png");
     private static final  Image rock2 = new Image("rock2.png");
-    private static final  Image flatground1 = new Image("flatground1.png");
+    private static final  Image flatGround1 = new Image("flatground1.png");
     private static final  Image border = new Image("border.png");
     private static final  Image pickaxe = new Image("pickaxe.png");
     private static final  Image shovel = new Image("shovel.png");
-    private static final  Image exit_open = new Image("exit-open.png");
-    private static final  Image exit_closed = new Image("exit-closed.png");
-    private static final  Image flatground2 = new Image("flatground2.png");
-    private static final  Image flatground3 = new Image("flatground3.png");
+    private static final  Image exitOpen = new Image("exit-open.png");
+    private static final  Image exitClosed = new Image("exit-closed.png");
+    private static final  Image flatGround2 = new Image("flatground2.png");
+    private static final  Image flatGround3 = new Image("flatground3.png");
     private static final  Image hole = new Image("hole.png");
     public TileType type;
 
+    public Tile(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public static void setRoot(Group root) {
+        Tile.root = root;
+    }
+
+    public static Group getRoot() {
+        return Tile.root;
+    }
+
+    public void setImage(Image image){
+        tileImage.setImage(image);
+    }
+
+    public void setX(int x){
+        this.x = x;
+    }
+
+    public void setY(int y){
+        this.y = y;
+    }
+
+    public void show(){
+        show(true);
+    }
+
+    public void show(boolean reset){
+        if(reset) {
+            tileImage.setX(0);
+            tileImage.setY(0);
+        }
+        tileImage.toFront();
+    }
+
+    public void hide(){
+        tileImage.toBack();
+    }
+
     public void generateTile() {
         //Used to generate a tile at the given X and Y coordinates
-        tile_image.setX(x);
-        tile_image.setY(y);
-        root.getChildren().add(tile_image);
-    }
-
-    public static void mapAllTiles(ReadCSVFile map, Tile[][] tiles) {
-        //Used when all the tiles are mapped the first time, creates each tile object in the tiles tile[][] object using generate tile and assign type
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i < map.width * map.height; i++) {
-            if (x == map.width) {
-                y++;
-                x = 0;
-            }
-            tiles[x][y] = new Tile(x * Constants.TILE_UNIT, y * Constants.TILE_UNIT);
-            tiles[x][y].assignTileType(map.map[x][y]);
-            tiles[x][y].generateTile();
-            x++;
-        }
-    }
-
-    public static void tileNextLevel(ReadCSVFile map, Tile[][] tiles){
-        //Similar to map_all_tiles but only sets the images and tile properties, it doesn't create any new tiles
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i < map.width * map.height; i++) {
-            if (x == map.width) {
-                y++;
-                x = 0;
-            }
-            tiles[x][y].x = x * Constants.TILE_UNIT;
-            tiles[x][y].y = y * Constants.TILE_UNIT;
-            tiles[x][y].assignTileType(map.map[x][y]);
-        x++;
-        }
+        tileImage.setX(x);
+        tileImage.setY(y);
+        root.getChildren().add(tileImage);
     }
 
     public void assignTileType(int id){
         type = TileType.fromId(id);
-
         double random;
+
         switch (type) {
             case ROCK:
                random = Math.random();
                 if(random > 0.75){
-                    tile_image.setImage(rock2);
+                    tileImage.setImage(rock2);
                 } else{
-                    tile_image.setImage(rock1);
+                    tileImage.setImage(rock1);
                 }
                 isTraversable = false;
                 isDamaging = false;
-
                 break;
             case FLAT_GROUND:
                 random = Math.random();
                 if(random > 0.95){
-                    tile_image.setImage(flatground2);
+                    tileImage.setImage(flatGround2);
                 } else if( random < 0.05){
-                    tile_image.setImage(flatground3);
-
+                    tileImage.setImage(flatGround3);
                 } else {
-                    tile_image.setImage(flatground1);
+                    tileImage.setImage(flatGround1);
                 }
                 isTraversable = true;
                 isDamaging = false;
-
                 break;
             case BORDER:
-                tile_image.setImage(border);
+                tileImage.setImage(border);
                 isTraversable = false;
                 isDamaging = false;
-
                 break;
             case PICKAXE:
-                tile_image.setImage(pickaxe);
+                tileImage.setImage(pickaxe);
                 isTraversable = true;
                 isDamaging = false;
-
                 break;
             case SHOVEL:
-                tile_image.setImage(shovel);
+                tileImage.setImage(shovel);
                 isTraversable = true;
                 isDamaging = false;
-
                 break;
             case EXIT_CLOSED:
-                exit_x = x/Constants.TILE_UNIT;
-                exit_y = y/Constants.TILE_UNIT;
-                tile_image.setImage(exit_closed);
+                exitX = x/Constants.TILE_UNIT;
+                exitY = y/Constants.TILE_UNIT;
+                tileImage.setImage(exitClosed);
                 isTraversable = false;
                 isDamaging = false;
-                System.out.println(exit_x);
-                System.out.println(exit_y);
-
+                System.out.println(exitX);
+                System.out.println(exitY);
                 break;
             case EXIT_OPEN:
-                tile_image.setImage(exit_open);
+                tileImage.setImage(exitOpen);
                 isTraversable = true;
                 isDamaging = false;
-
                 break;
             case HOLE:
-                tile_image.setImage(hole);
+                tileImage.setImage(hole);
                 isTraversable = true;
                 isDamaging = true;
-
                 break;
         }
     }
@@ -142,12 +142,7 @@ public class Tile {
         this.x += x;
         this.y += y;
 
-        tile_image.setX(this.x);
-        tile_image.setY(this.y);
-    }
-
-    Tile(int x, int y){
-        this.x = x;
-        this.y = y;
+        tileImage.setX(this.x);
+        tileImage.setY(this.y);
     }
 }

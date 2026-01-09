@@ -31,7 +31,6 @@ public class Sounds {
 
             return clip;
 
-
         } catch (UnsupportedAudioFileException | IOException | javax.sound.sampled.LineUnavailableException e) {
             e.printStackTrace();
 
@@ -62,7 +61,4 @@ public class Sounds {
         rock.setFramePosition(0);
         rock.start();
     }
-
-
-
 }

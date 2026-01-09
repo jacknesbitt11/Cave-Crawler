@@ -1,4 +1,5 @@
 package com.nesbot.cavecrawler;
+
 public enum TileType {
     ROCK(1),
     FLAT_GROUND(2),
@@ -22,4 +23,5 @@ public enum TileType {
             }
         }
         return null;
-    }}
+    }
+}
