@@ -51,7 +51,6 @@ public class Sounds {
     public static void win() {
         win.setFramePosition(0);
         win.start();
-
     }
     public static void lose() {
         lose.setFramePosition(0);

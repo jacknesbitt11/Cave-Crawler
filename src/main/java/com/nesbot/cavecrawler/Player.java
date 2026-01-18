@@ -112,8 +112,11 @@ public class Player {
         }
     }
 
-    public boolean isCollision(int x, int y, Tile[][] tiles) {return !tiles[this.x + x][this.y + y].isTraversable;}
-    //Checks if the tile that the player is moving towards is traversable
+    public boolean isCollision(int x, int y, Tile[][] tiles) {
+        //Checks if the tile that the player is moving towards is traversable
+        return !tiles[this.x + x][this.y + y].isTraversable;
+    }
+
 
     public void gameWin(){
         //Displays the win menu
@@ -197,6 +200,10 @@ public class Player {
 
     public void reset(Tile[][] tiles){
         //Resets all the player variables back to their defaults
+        hasPickaxe = false;
+        hasShovel = false;
+        hasPickaxeUse = true;
+        hasShovelUse = true;
         playerLose.hide();
         pickAxeIconTile.hide();
         shovelIconTile.hide();
@@ -207,9 +214,6 @@ public class Player {
         x = Constants.PLAYER_DEFAULT_X;
         y = Constants.PLAYER_DEFAULT_Y;
         playerMove(0,0, tiles);
-        hasPickaxe = false;
-        hasShovel = false;
-        hasPickaxeUse = true;
-        hasShovelUse = true;
+
     }
 }

@@ -121,8 +121,6 @@ public class Tile {
                 tileImage.setImage(exitClosed);
                 isTraversable = false;
                 isDamaging = false;
-                System.out.println(exitX);
-                System.out.println(exitY);
                 break;
             case EXIT_OPEN:
                 tileImage.setImage(exitOpen);
